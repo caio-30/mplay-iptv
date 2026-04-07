@@ -15,13 +15,17 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install @capacitor/core @capacitor/cli @capacitor/android
 
       - name: Build Web Project
         run: npm run build
 
       - name: Sync Capacitor
-        run: npx cap sync android
+        run: |
+          npx cap sync android
+          npx cap copy android
 
       - name: Setup Java
         uses: actions/setup-java@v4
