@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mplay</string>
+    <string name="title_activity_main">Mplay</string>
+    <string name="package_name">com.mplay.app</string>
+    <string name="custom_url_scheme">com.mplay.app</string>
+</resources>
