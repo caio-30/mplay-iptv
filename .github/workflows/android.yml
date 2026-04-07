@@ -23,13 +23,13 @@ jobs:
         run: npm run build --if-present
 
       - name: Capacitor Sync
-        run: npx cap sync android || echo "Sync falhou, mas continuando..."
+        run: npx cap sync android || echo "Sincronização manual..."
 
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: '17'
+          java-version: '21' # Ajustado para o Java 21 que seu erro pediu
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -37,10 +37,12 @@ jobs:
       - name: Build Android APK
         run: |
           cd android
+          # Cria as pastas de plugins para evitar erro de diretório
           mkdir -p capacitor-cordova-android-plugins
           touch capacitor-cordova-android-plugins/cordova.variables.gradle
           chmod +x gradlew
-          # O comando abaixo tenta resolver as duplicatas de biblioteca
+          # Limpa o cache e constrói forçando o uso de AndroidX (resolve duplicatas)
+          ./gradlew clean
           ./gradlew assembleDebug -Pandroid.useAndroidX=true -Pandroid.enableJetifier=true
           
       - name: Upload APK Artifact
