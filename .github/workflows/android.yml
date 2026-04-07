@@ -12,7 +12,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20  # <--- ATUALIZADO PARA VERSÃO 20
+          node-version: 20
 
       - name: Install Dependencies
         run: |
@@ -23,14 +23,13 @@ jobs:
         run: npm run build --if-present
 
       - name: Capacitor Sync
-        run: |
-          npx cap sync android || echo "Sync falhou, mas continuando..."
+        run: npx cap sync android || echo "Sync falhou, mas continuando..."
 
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: '17'
+          java-version: '21' # <--- ATUALIZADO PARA 21 PARA COMBINAR COM SEU PROJETO
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -38,7 +37,6 @@ jobs:
       - name: Build Android APK
         run: |
           cd android
-          # Garante a existência da pasta de plugins que deu erro antes
           mkdir -p capacitor-cordova-android-plugins
           touch capacitor-cordova-android-plugins/cordova.variables.gradle
           chmod +x gradlew
